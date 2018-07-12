@@ -19,4 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/users/all', 'UserController@index');
 Route::post('/create_account', 'UserController@store');
+Route::post('/create_account_pemilik_kos', 'UserController@store_pemilik_kos');
 Route::post('/login', 'UserController@login');

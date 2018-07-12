@@ -43,7 +43,7 @@ class UserController extends Controller
     }
 
     /**
-     * Register a new account
+     * Register a new anak kos account
      */
     public function store(Request $request)
     {
@@ -59,7 +59,36 @@ class UserController extends Controller
             'password'  => bcrypt($request->password)
         ]);
 
-        return fractal($user, new UserTransformer())->toArray();
+        $data = User::find($user->id);
+
+        $json = fractal($data, new UserTransformer())->toArray();
+
+        return response()->json($json, 201);
+    }
+
+    /**
+     * Register a new pemilik kos account
+     */
+    public function store_pemilik_kos(Request $request)
+    {
+        $this->validate($request, [
+            'name'      => 'required',
+            'email'     => 'required|email|unique:users',
+            'password'  => 'required|min:5',
+        ]);
+
+        $user = User::create([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'role'      => 1,
+            'password'  => bcrypt($request->password)
+        ]);
+
+        $data = User::find($user->id);
+
+        $json = fractal($data, new UserTransformer())->toArray();
+
+        return response()->json($json, 201);
     }
 
     /**

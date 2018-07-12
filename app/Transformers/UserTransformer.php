@@ -32,7 +32,7 @@ class UserTransformer extends TransformerAbstract
             'role'      => $role,
             'credit'    => $user->credit,
             'Premium Account'   => $premium,
-            'registered'    => $user->created_at->diffForHumans(),
+            'registered'        => $user->created_at->diffForHumans(),
         ];
     }
 }
