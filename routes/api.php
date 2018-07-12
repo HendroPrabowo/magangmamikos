@@ -24,3 +24,4 @@ Route::post('/login', 'UserController@login');
 
 Route::get('/kost/all', 'KostController@index');
 Route::post('/kost/{id}/create', 'KostController@create');
+Route::delete('/kost/{id}', 'KostController@delete');

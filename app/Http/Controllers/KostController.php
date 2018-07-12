@@ -39,4 +39,18 @@ class KostController extends Controller
 
         return fractal($kost, new KostTransformer())->toArray();
     }
+
+    public function delete($id){
+        $kost = Kost::find($id);
+        if($kost == null)
+            return response()->json([
+                'error'     => 'Cant delete',
+                'message'   => 'Kost tidak ada',
+            ]);
+
+        $kost->delete();
+        return response()->json([
+            'message'   => 'Success',
+        ]);
+    }
 }
