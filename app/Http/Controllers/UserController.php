@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Transformers\UserTransformer;
 use App\User;
+use Hamcrest\Thingy;
 use Illuminate\Http\Request;
+use Auth;
 
 class UserController extends Controller
 {
@@ -22,24 +24,42 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Login
      */
-    public function create()
+    public function login(Request $request)
     {
+        $this->validate($request, [
+            'email'     => 'required|email',
+            'password'  => 'required|min:5',
+        ]);
 
+        if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            return response()->json(['error' => 'Email of Password wrong'], 401);
+        }
+
+        $user = User::find(Auth::user()->id);
+
+        return fractal($user, new UserTransformer())->toArray();
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Register a new account
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name'      => 'required',
+            'email'     => 'required|email|unique:users',
+            'password'  => 'required|min:5',
+        ]);
+
+        $user = User::create([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => bcrypt($request->password)
+        ]);
+
+        return fractal($user, new UserTransformer())->toArray();
     }
 
     /**
