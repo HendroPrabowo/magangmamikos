@@ -22,7 +22,8 @@ class KostController extends Controller
         $user = User::find($id);
         if($user->role != 1)
             return response()->json([
-                'error' => 'Bukan pemilik kost'
+                'error'     => 'Tidak bisa menambahkan kost',
+                'message'   => 'Akun anda bukan akun pemilik kost',
             ]);
 
         $this->validate($request, [
