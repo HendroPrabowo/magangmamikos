@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Kost;
+use App\Transformers\KostTransformer;
 use App\Transformers\UserTransformer;
 use App\User;
 use Hamcrest\Thingy;
 use Illuminate\Http\Request;
 use Auth;
+use League\Fractal\Resource\Collection;
 
 class UserController extends Controller
 {
@@ -38,8 +41,27 @@ class UserController extends Controller
         }
 
         $user = User::find(Auth::user()->id);
+        $user_fractal = fractal($user, new UserTransformer())->toArray();
 
-        return fractal($user, new UserTransformer())->toArray();
+        if($user->role == 2)
+            return $user_fractal;
+
+//        $kost_all = Kost::where('user_id', $user->id)->get();
+//        $kost_array = fractal()
+//            ->collection($kost)
+//            ->transformWith(new KostTransformer())
+//            ->toArray();
+
+        $kost_all = User::find($user->id)->kosts;
+        $kost_array = fractal()
+            ->collection($kost_all)
+            ->transformWith(new KostTransformer())
+            ->toArray();
+
+        return response()->json([
+            'user'      => $user_fractal,
+            'List Kost' => $kost_array,
+        ]);
     }
 
     /**
