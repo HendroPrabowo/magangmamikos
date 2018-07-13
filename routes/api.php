@@ -22,6 +22,7 @@ Route::post('/create_account', 'UserController@store');
 Route::post('/create_account_pemilik_kos', 'UserController@store_pemilik_kos');
 Route::post('/login', 'UserController@login');
 
+Route::get('/kost/user', 'KostController@show')->middleware('auth:api');
 Route::get('/kost/all', 'KostController@index');
 Route::get('/kost/all/detail', 'KostController@detail');
 Route::post('/kost/{id}/create', 'KostController@create');

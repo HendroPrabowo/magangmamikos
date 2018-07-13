@@ -31,8 +31,9 @@ class UserTransformer extends TransformerAbstract
             'email'     => $user->email,
             'role'      => $role,
             'credit'    => $user->credit,
-            'Premium Account'   => $premium,
-            'registered'        => $user->created_at->diffForHumans(),
+            'is_premium'    => $premium,
+            'api_token'     => $user->api_token,
+            'registered'    => $user->created_at->diffForHumans(),
         ];
     }
 }

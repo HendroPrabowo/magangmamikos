@@ -78,7 +78,8 @@ class UserController extends Controller
         $user = User::create([
             'name'      => $request->name,
             'email'     => $request->email,
-            'password'  => bcrypt($request->password)
+            'password'  => bcrypt($request->password),
+            'api_token' => bcrypt($request->email),
         ]);
 
         $data = User::find($user->id);

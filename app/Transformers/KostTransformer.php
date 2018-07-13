@@ -19,7 +19,7 @@ class KostTransformer extends TransformerAbstract
             'user_id'   => $kost->user_id,
             'nama'      => $kost->nama,
             'deskripsi' => $kost->deskripsi,
-            'address'   => $kost->address
+            'address'   => $kost->address,
         ];
     }
 }

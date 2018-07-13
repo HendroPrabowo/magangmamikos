@@ -8,6 +8,7 @@ use App\Transformers\KostTransformer;
 use App\Transformers\RoomTransformer;
 use App\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class KostController extends Controller
 {
@@ -63,5 +64,21 @@ class KostController extends Controller
         return response()->json([
             'message'   => 'Success',
         ]);
+    }
+
+    public function show(){
+        $user = Auth::user();
+
+        // Validasi apakah user pemilik kost atau bukan
+        if($user->role != 1)
+            return response()->json([
+                'error'     => 'Akun anda bukan pemilik kost'
+            ]);
+
+        $kosts = $user->kosts;
+        return fractal()
+            ->collection($kosts)
+            ->transformWith(new KostTransformer())
+            ->toArray();
     }
 }
