@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->integer('credit')->default(20);
             $table->tinyInteger('is_premium')->default(0);
             $table->string('password');
+            $table->string('api_token')->unique();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -34,3 +34,5 @@ Route::delete('/room/{id}', 'RoomController@delete');
 
 Route::get('/book/all', 'BookSurveyController@index');
 Route::post('/user/{user_id}/book', 'BookSurveyController@book');
+
+Route::get('/reset', 'UserController@reset_api');

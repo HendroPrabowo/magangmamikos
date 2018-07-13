@@ -19,7 +19,7 @@ class ResetCreditCommand extends Command
      *
      * @var string
      */
-    protected $description = 'This command is to reset credit user';
+    protected $description = "This command is to reset all user's credit";
 
     /**
      * Create a new command instance.
