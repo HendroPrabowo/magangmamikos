@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Kost;
+use App\Transformers\KostDetailTransformer;
 use App\Transformers\KostTransformer;
+use App\Transformers\RoomTransformer;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -15,6 +17,15 @@ class KostController extends Controller
         return fractal()
             ->collection($kost)
             ->transformWith(new KostTransformer())
+            ->toArray();
+    }
+
+    public function detail(){
+        $kost = Kost::all();
+
+        return fractal()
+            ->collection($kost)
+            ->transformWith(new KostDetailTransformer())
             ->toArray();
     }
 

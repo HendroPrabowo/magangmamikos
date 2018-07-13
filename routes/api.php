@@ -23,5 +23,9 @@ Route::post('/create_account_pemilik_kos', 'UserController@store_pemilik_kos');
 Route::post('/login', 'UserController@login');
 
 Route::get('/kost/all', 'KostController@index');
+Route::get('/kost/all/detail', 'KostController@detail');
 Route::post('/kost/{id}/create', 'KostController@create');
 Route::delete('/kost/{id}', 'KostController@delete');
+
+Route::get('/room/all', 'RoomController@index');
+Route::post('room/{id}/create', 'RoomController@create');
