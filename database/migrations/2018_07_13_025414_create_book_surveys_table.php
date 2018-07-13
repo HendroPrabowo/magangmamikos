@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKostsTable extends Migration
+class CreateBookSurveysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateKostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('kosts', function (Blueprint $table) {
+        Schema::create('book_surveys', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('nama', 255);
-            $table->text('deskripsi');
-            $table->text('address');
+            $table->unsignedInteger('kost_id');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateKostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kosts');
+        Schema::dropIfExists('book_surveys');
     }
 }

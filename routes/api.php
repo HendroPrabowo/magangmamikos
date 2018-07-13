@@ -29,3 +29,7 @@ Route::delete('/kost/{id}', 'KostController@delete');
 
 Route::get('/room/all', 'RoomController@index');
 Route::post('room/{id}/create', 'RoomController@create');
+Route::delete('/room/{id}', 'RoomController@delete');
+
+Route::get('/book/all', 'BookSurveyController@index');
+Route::post('/user/{user_id}/book', 'BookSurveyController@book');

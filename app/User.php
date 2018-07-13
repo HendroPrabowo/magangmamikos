@@ -27,9 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function kosts()
-    {
+    public function kosts(){
         return $this->hasMany('App\Kost');
     }
 
+    public function book_surveys(){
+        return $this->hasMany('App\BookSurvey');
+    }
 }

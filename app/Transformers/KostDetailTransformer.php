@@ -28,6 +28,7 @@ class KostDetailTransformer extends TransformerAbstract
             'user_id'   => $kost->user_id,
             'nama'      => $kost->nama,
             'deskripsi' => $kost->deskripsi,
+            'address'   => $kost->address,
             'list room' => $rooms,
         ];
     }
