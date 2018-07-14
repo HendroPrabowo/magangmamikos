@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\BookSurvey;
+use App\Kost;
 use App\Transformers\BookSurveyTransformer;
 use App\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class BookSurveyController extends Controller
 {
@@ -18,42 +20,51 @@ class BookSurveyController extends Controller
             ->toArray();
     }
 
-    public function book(Request $request, $user_id){
-        $user = User::find($user_id);
-        // Validasi apakah user ada
-        if($user == null)
-            return response()->json(['error' => 'User not Exist'], 400);
+    public function book(Request $request){
+        $user = Auth::user();
 
-        // Validari role
-        if($user->role == 1)
-            return response()->json([
-                'error' => 'Anda bukan anak kos'
-            ], 401);
-
-        // Validasi credit
+        // Cek credit
         if($user->credit < 5)
-            return response()->json(['error' => 'Credit tidak cukup'], 400);
+            return response()->json(['message' => 'Credit tidak cukup'], 403);
 
         // Validasi request
         $this->validate($request, [
-            'kost_id'    => 'required|integer'
+            'kost_id'    => 'required|integer',
+            'book'  => 'required',
         ]);
 
-        // Validasi book_request apakah sudah pernah dibuat
+        // Cek apakah kost ada
+        $kost = Kost::find($request->kost_id);
+        if($kost == null)
+            return response()->json(['message' => 'Kost tidak ada'], 403);
+
+        // Cek apakah user lain sudah membooking di jam yang sama
+        $book_another_user_before = BookSurvey::where([
+            'kost_id'   => $request->kost_id,
+            'book'      => $request->book,
+        ])->get();
+
+        if($book_another_user_before->get(0) != null) return response()->json([
+            'error'     => 'Tidak bisa membooking',
+            'message'   => 'Sudah ada user lain yang membooking di jam yang sama',
+        ], 403);
+
+        // Cek book_request apakah sudah pernah dibuat
         $book_before = BookSurvey::where([
-            'user_id'   => $user_id,
+            'user_id'   => $user->id,
             'kost_id'   => $request->kost_id,
         ])->get();
 
-        if($book_before->get(0) != null) return response()->json(['message' => 'Sudah pernah membooking ini']);
+        if($book_before->get(0) != null) return response()->json(['message' => 'Sudah pernah membooking ini'], 403);
 
         // Pengurangan credit
         $user->credit = $user->credit - 5;
         $user->save;
 
         $book = BookSurvey::create([
-            'user_id'   => $user_id,
+            'user_id'   => $user->id,
             'kost_id'   => $request->kost_id,
+            'book'      => $request->book,
         ]);
 
         return fractal($book, new BookSurveyTransformer())->toArray();

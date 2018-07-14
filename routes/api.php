@@ -33,6 +33,6 @@ Route::post('room/{id}/create', 'RoomController@create');
 Route::delete('/room/{id}', 'RoomController@delete');
 
 Route::get('/book/all', 'BookSurveyController@index');
-Route::post('/user/{user_id}/book', 'BookSurveyController@book');
+Route::post('/book/create', 'BookSurveyController@book')->middleware('auth:api');
 
 Route::get('/reset', 'UserController@reset_api');

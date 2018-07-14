@@ -24,6 +24,7 @@ class BookSurveyTransformer extends TransformerAbstract
             'id'        => $book_survey->id,
             'user_id'   => $book_survey->user_id,
             'kost_id'   => $book_survey->kost_id,
+            'book'      => $book_survey->book,
 
             'user'      => $user->name,
             'kost'      => $kost->nama,
