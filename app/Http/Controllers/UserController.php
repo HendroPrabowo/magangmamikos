@@ -116,4 +116,18 @@ class UserController extends Controller
 
         return response()->json($json, 201);
     }
+
+    public function premium(Request $request)
+    {
+        $user = Auth::user();
+
+        // Cek apakah sudah premium
+        if($user->is_premium == 1)
+            return response()->json(['message' => 'user sudah premium']);
+
+        $user->is_premium = 1;
+        $user->save();
+
+        return fractal($user, new UserTransformer)->toArray();
+    }
 }

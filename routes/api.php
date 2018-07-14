@@ -22,6 +22,8 @@ Route::post('/create_account', 'UserController@store');
 Route::post('/create_account_pemilik_kos', 'UserController@store_pemilik_kos');
 Route::post('/login', 'UserController@login');
 
+Route::put('/user/premium', 'UserController@premium')->middleware('auth:api');
+
 Route::get('/kost/user', 'KostController@show')->middleware('auth:api', 'pemilik_kost');
 Route::get('/kost/user/room', 'KostController@kostAndRoom')->middleware('auth:api', 'pemilik_kost');
 Route::get('/kost/all', 'KostController@index')->middleware('auth:api');
