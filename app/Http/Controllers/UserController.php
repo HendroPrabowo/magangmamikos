@@ -105,6 +105,7 @@ class UserController extends Controller
             'email'     => $request->email,
             'role'      => 1,
             'password'  => bcrypt($request->password),
+            'api_token' => bcrypt($request->email),
         ]);
 
         $data = User::find($user->id);

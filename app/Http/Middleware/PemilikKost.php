@@ -18,7 +18,7 @@ class PemilikKost
     {
         if(Auth::user()->role != 1)
             return response()->json([
-                'message'   => 'Anda bukan pemilik kost',
+                'message'   => 'anda bukan pemilik kost',
             ]);
         return $next($request);
     }

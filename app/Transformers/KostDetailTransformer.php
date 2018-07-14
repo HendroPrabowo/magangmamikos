@@ -29,7 +29,7 @@ class KostDetailTransformer extends TransformerAbstract
             'nama'      => $kost->nama,
             'deskripsi' => $kost->deskripsi,
             'address'   => $kost->address,
-            'list room' => $rooms,
+            'list_room' => $rooms,
         ];
     }
 }

@@ -17,6 +17,7 @@ class CreateBookSurveysTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('kost_id');
+            $table->timestamp('book');
         });
     }
 
