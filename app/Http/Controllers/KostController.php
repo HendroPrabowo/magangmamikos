@@ -69,12 +69,6 @@ class KostController extends Controller
     public function show(){
         $user = Auth::user();
 
-        // Validasi apakah user pemilik kost atau bukan
-        if($user->role != 1)
-            return response()->json([
-                'error'     => 'Akun anda bukan pemilik kost'
-            ]);
-
         $kosts = $user->kosts;
         return fractal()
             ->collection($kosts)
