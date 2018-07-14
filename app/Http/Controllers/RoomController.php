@@ -57,7 +57,7 @@ class RoomController extends Controller
             return response()->json(['message' => 'ruangan tidak ada'], 400);
 
         $user_id = $room->kost->user_id;
-
+        
         // Cek kepemilikan kost dan ruangan
         if($user->id != $user_id)
             return response()->json(['message' => 'anda bukan pemilik kost dan kamar ini'], 403);

@@ -27,11 +27,11 @@ Route::get('/kost/user/room', 'KostController@kostAndRoom')->middleware('auth:ap
 Route::get('/kost/all', 'KostController@index')->middleware('auth:api');
 Route::get('/kost/all/detail', 'KostController@detail')->middleware('auth:api');
 Route::post('/kost/create', 'KostController@create')->middleware('auth:api', 'pemilik_kost');
-Route::delete('/kost/delete/{id_kost}', 'KostController@delete')->middleware('auth:api', 'pemilik_kost'); // Belum Tes
+Route::delete('/kost/delete/{id_kost}', 'KostController@delete')->middleware('auth:api', 'pemilik_kost');
 
-Route::get('/room/all', 'RoomController@index');
+Route::get('/room/all', 'RoomController@index')->middleware('auth:api');
 Route::post('/room/{id_kost}/create', 'RoomController@create')->middleware('auth:api', 'pemilik_kost');
-Route::delete('/room/{id_kost}', 'RoomController@delete')->middleware('auth:api', 'pemilik_kost');
+Route::delete('/room/{id_kost}/delete', 'RoomController@delete')->middleware('auth:api', 'pemilik_kost');
 
 Route::get('/book/all', 'BookSurveyController@index');
 Route::post('/book/create', 'BookSurveyController@book')->middleware('auth:api');

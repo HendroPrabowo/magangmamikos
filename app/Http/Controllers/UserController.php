@@ -31,16 +31,18 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
+        // Validasi input
         $this->validate($request, [
             'email'     => 'required|email',
             'password'  => 'required|min:5',
         ]);
 
+        // Cek login
         if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             return response()->json(['error' => 'Email of Password wrong'], 401);
         }
 
-        $user = User::find(Auth::user()->id);
+        $user = Auth::user();
         $user_fractal = fractal($user, new UserTransformer())->toArray();
 
         if($user->role == 2)
@@ -60,12 +62,12 @@ class UserController extends Controller
 
         return response()->json([
             'user'      => $user_fractal,
-            'List Kost' => $kost_array,
+            'kost'      => $kost_array,
         ]);
     }
 
     /**
-     * Register a new anak kos account
+     * Register a new anak kost account
      */
     public function store(Request $request)
     {
